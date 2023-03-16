@@ -16,4 +16,9 @@ class Modelo extends Model
     protected $fillable = [
         "modelo_nombre",
     ];
+
+    public function marca()
+    {
+        return $this->belongsTo(Marca::class, "id");
+    }
 }

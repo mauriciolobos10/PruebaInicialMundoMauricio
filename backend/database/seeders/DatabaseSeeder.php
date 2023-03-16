@@ -3,6 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Bodega;
+use App\Models\Dispositivo;
+use App\Models\Dispositivo_bodega;
+use App\Models\Marca;
+use App\Models\Modelo;
+use Illuminate\Bus\Dispatcher;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -14,11 +21,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        // $modelo = Modelo::factory()->create();
+        Bodega::factory()
+        ->count(5)
+        ->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        $marca = Marca::factory()
+        ->count(3)
+        ->create();
+
+
+        $modelo = Modelo::factory()
+        ->count(15)
+        ->create();
+
+        $dispositivo = Dispositivo::factory()
+        ->count(25)
+        ->create();
+
+
+        $dispositivo_bodega = Dispositivo_bodega::factory()
+        ->count(10)
+        ->create();
+
+      
+
     }
 }
