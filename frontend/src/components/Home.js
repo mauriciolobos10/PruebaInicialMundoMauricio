@@ -13,47 +13,65 @@ const Home = () => {
     
 
 
+    // useEffect(() => {
+    //     // // cargarDispositivos();
+    //     // // cargarDispositivos({modelo_id :1, bodega_id: 1});
+    //     //  cargarMarcas();
+    //     // // aumentar();
+        
+    // }, []);
+
+    // const obtenerMarca = (itemExterno) => {
+    //     axios.get("http://127.0.0.1:8000/api/marca/verMarca", {
+    //         id: itemExterno.id  
+    //         });
+
+
+    // };
+
+    // const [marcas, setMarcas] = useState([{id :'', nombre: ''}]); 
+    const [marcas, setMarcas] = useState([]); 
+    const [contador, setContador] = useState(2);
+
+    const cargarMarcas = async () => {
+        
+        const data = await axios.get("http://127.0.0.1:8000/api/marca/listarMarcas");
+        console.log('data', data.data.marcas);
+
+        setMarcas(data?.data?.marcas);
+        
+        // setTotal(data.data.total);
+      };
+
     useEffect(() => {
-        // cargarDispositivos();
-        // cargarDispositivos({modelo_id :1, bodega_id: 1});
-         cargarMarcas();
-        // aumentar();
+        cargarMarcas();
+        console.log('marcas', marcas);
         
     }, []);
 
-    const obtenerMarca = (itemExterno) => {
-        axios.get("http://127.0.0.1:8000/api/marca/verMarca", {
-            id: itemExterno.id  
-            });
-    };
-
-    const [marcas, setmarcas] = useState([{id :'', nombre: ''}]); 
-    const [contador, setContador] = useState(2);
-
-    const cargarMarcas = () => {
+    // const cargarMarcas = () => {
         
-        axios.get("http://127.0.0.1:8000/api/marca/listarMarcas").then(
-            (response) => {
-                // console.log(response.data.marcas);
-                // setmarcas((marcas) => [response.data.marcas]);
-                // marcas = response.data.marcas;
-                // console.log(response.data.marcas);
+    //     axios.get("http://127.0.0.1:8000/api/marca/listarMarcas").then(
+    //         (response) => {
                 
-                // setContador(65);
-                response.data.marcas.forEach(element => {
-                    // console.log(element);
-                    const vara = {id :element.id, nombre: element.marca_nombre}
-                    console.log(vara);
-                    setmarcas((marcas) => [vara,...marcas]);
-                    // setContador(5);
-                    // aumentar();
-                    console.log(contador);
-                });
+    //             console.log(response.data.marcas);
+    //             setContador(4);
+    //             console.log(contador);
+    //             // setContador(65);
+    //             response.data.marcas.forEach(element => {
+    //                 // console.log(element);
+    //                 const vara = {id :element.id, nombre: element.marca_nombre}
+    //                 // console.log(vara);
+    //                 setmarcas((marcas) => [vara,...marcas]);
+    //                 // setContador(5);
+    //                 // aumentar();
+    //                 console.log(contador);
+    //             });
 
-                console.log(marcas);
+    //             console.log(marcas);
                 
-            });
-    };
+    //         });
+    // };
     const aumentar = () => {
         setContador(3);
 
