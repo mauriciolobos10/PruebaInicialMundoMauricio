@@ -3,6 +3,7 @@ import { Stack, ThemeProvider } from "@mui/system";
 import axios from "axios";
 
 import React, { Component, useEffect, useState }  from 'react';
+import AutocompleteComponent from "./AutocompleteComponent";
 // import { useBuscarPerro } from "../Queries/QueriPerro";
 // import Perro from "./Perro";
 
@@ -36,18 +37,53 @@ const Home = () => {
     const cargarMarcas = async () => {
         
         const data = await axios.get("http://127.0.0.1:8000/api/marca/listarMarcas");
-        console.log('data', data.data.marcas);
+        
 
-        setMarcas(data?.data?.marcas);
+        let datos = data?.data?.marcas.map((item) => {
+            return { label: item.marca_nombre, value: item.id.toString() };
+        });
+    
+        setMarcas(datos);
+
+
+        // axios.get("http://127.0.0.1:8000/api/marca/listarMarcas").then(
+        //     (response) => {
+        //         setMarcas(response?.data?.marcas);
+
+                
+
+
+
+        //         // response.data.marcas.forEach(element => {
+        //         //     const vara = {id :element.id, nombre: element.marca_nombre}
+        //         //     // console.log(vara);
+        //         //     setmarcas((marcas) => [vara,...marcas]);
+        //         //     // setContador(5);
+        //         //     // aumentar();
+        //         //     console.log(contador);
+        //         // });
+
+                
+        //     });
         
         // setTotal(data.data.total);
       };
 
     useEffect(() => {
         cargarMarcas();
-        console.log('marcas', marcas);
+        // console.log('marcas', marcas);
+        // console.log(contador);
+        // setContador(5);
+        // console.log('cambiado',contador);
         
     }, []);
+    useEffect(() => {
+        console.log('marcas2', marcas);
+        // cargarModelos(marcas.id)
+        
+    }, [marcas]);
+
+    const [count, setCount] = useState(0);
 
     // const cargarMarcas = () => {
         
@@ -103,29 +139,22 @@ const Home = () => {
       ];
 
       const [value, setValue] = React.useState(top100Films[0]);
+
+    const [flag, setFlag] = useState(true);
     
 
     return (
+        
         <CardContent>
             <Card >
-                <select>
-                    {/* {marcas.map()} */}
-                    {/* {marcas.map("hola")} */}
-                </select>
-                {/* {cargarMarcas()} */}
-                <Autocomplete
-                disablePortal
-                value={value}
-                onClick={() => console.log("alo")}
+                <AutocompleteComponent opciones = {marcas}/> 
 
-                onChange={(event, newValue) => {
-                  setValue(newValue);
-                }}
-                id="combo-box-demo"
-                options={top100Films}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Movie" />}
-                />
+                {modelos?.length > 0 && (
+                    <Autocomplete
+                    options={modelos}
+                    
+                    />
+                )}
             </Card>
         </CardContent>
         
