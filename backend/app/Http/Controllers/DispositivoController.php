@@ -17,5 +17,8 @@ class DispositivoController extends Controller
     public function verDispositivo(Request $request){
         return $this->DispositivoRepo->verDispositivo($request);
     }
+    public function listarDispositivos(Request $request){
+        return $this->DispositivoRepo->listarDispositivos($request);
+    }
 
 }

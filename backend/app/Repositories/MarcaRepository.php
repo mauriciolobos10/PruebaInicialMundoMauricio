@@ -25,4 +25,18 @@ class MarcaRepository
         }
     }
 
+    public function listarMarcas()
+    {
+        try {
+            $marca = Marca::all();
+            if(!$marca){
+                throw new Exception("No se encuentran las marcas");
+            }
+
+        return response()->json(["marcas" => $marca], Response::HTTP_OK);
+        }catch (Exception $e) {
+            return response()->json(["error" => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
 }

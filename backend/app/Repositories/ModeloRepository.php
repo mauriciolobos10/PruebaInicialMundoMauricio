@@ -25,4 +25,18 @@ class ModeloRepository
         }
     }
 
+    public function listarModelos($request)
+    {
+        try {
+            $modelo = Modelo::where('marca_id', $request->marca_id)->get();
+            if(!$modelo){
+                throw new Exception("No se encuentran modelos");
+            }
+
+        return response()->json(["modelos" => $modelo], Response::HTTP_OK);
+        }catch (Exception $e) {
+            return response()->json(["error" => $e->getMessage()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
 }

@@ -17,5 +17,8 @@ class MarcaController extends Controller
     public function verMarca(Request $request){
         return $this->marcaRepo->verMarca($request);
     }
+    public function listarMarcas(){
+        return $this->marcaRepo->listarMarcas();
+    }
 
 }

@@ -40,10 +40,6 @@ class DatabaseSeeder extends Seeder
         ->create();
 
 
-        $dispositivo_bodega = Dispositivo_bodega::factory()
-        ->count(10)
-        ->create();
-
       
 
     }

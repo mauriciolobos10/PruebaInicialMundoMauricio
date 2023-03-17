@@ -18,4 +18,9 @@ class ModeloController extends Controller
         return $this->ModeloRepo->verModelo($request);
     }
 
+
+    public function listarModelos(Request $request){
+        return $this->ModeloRepo->listarModelos($request);
+    }
+
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Bodega;
 use App\Models\Modelo;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,6 +23,11 @@ class DispositivoFactory extends Factory
             
 
             'modelo_id' => Modelo::inRandomOrder()
+            ->limit(1)
+            ->pluck('id')->first(),
+
+
+            'bodega_id' => Bodega::inRandomOrder()
             ->limit(1)
             ->pluck('id')->first(),
         ];

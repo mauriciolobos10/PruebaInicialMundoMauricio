@@ -20,4 +20,9 @@ class Dispositivo extends Model
     public function modelo(){
         return $this->belongsTo(Modelo::class, "modelo_id");
     }
+
+
+    public function bodega(){
+        return $this->belongsTo(Bodega::class, "bodega_id");
+    }
 }

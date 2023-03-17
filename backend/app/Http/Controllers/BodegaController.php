@@ -17,5 +17,8 @@ class BodegaController extends Controller
     public function verBodega(Request $request){
         return $this->BodegaRepo->verBodega($request);
     }
+    public function listarBodegas(){
+        return $this->BodegaRepo->listarBodegas();
+    }
 
 }
