@@ -20,5 +20,9 @@ class BodegaController extends Controller
     public function listarBodegas(){
         return $this->BodegaRepo->listarBodegas();
     }
+    public function listarDatosBodega(Request $request){
+        return $this->BodegaRepo->listarDatosBodega($request);
+    }
+    
 
 }

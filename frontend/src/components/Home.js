@@ -4,6 +4,7 @@ import axios from "axios";
 
 import React, { Component, useEffect, useState }  from 'react';
 import AutocompleteComponent from "./AutocompleteComponent";
+import TablaProductos from "./TablaProductos";
 // import { useBuscarPerro } from "../Queries/QueriPerro";
 // import Perro from "./Perro";
 
@@ -17,6 +18,8 @@ const Home = () => {
     const [modelos, setModelos] = useState([]); 
     const [bodegas, setBodegas] = useState([]); 
     const [dispositivos, setDispositivos] = useState([]); 
+    const [grilla, setGrilla] = useState([]); 
+    
 
     useEffect(() => {
         cargarMarcas();
@@ -82,26 +85,22 @@ const Home = () => {
         setDispositivos(datos);
 
       };
+
+      const cargarGrillaBodega = async (itemExternoBodega) => {
+        setGrilla(null)
+        const data = await axios.get("http://127.0.0.1:8000/api/bodega/listarDatosBodega?id="+itemExternoBodega);
+        console.log('dispo',data.data.bodegas)
+        
+        let datos = data?.data?.bodegas.map((item) => {
+            return { label: item.id, dispositivo_nombre: item.dispositivo_nombre.toString(), modelo_nombre: item.modelo_nombre.toString()
+                , marca_nombre: item.marca_nombre.toString(), bodega_nombre: item.bodega_nombre.toString()};
+        });
+    
+        setGrilla(datos);
+
+      };
       
 
-
-    // const cargarDispositivos = (itemExternoBodega,itemExternoModelo) => {
-    //     // axios.get("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id=1&bodega_id=1").then(
-    //         // console.log("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id="+itemExterno.modelo_id+
-    //         // "&bodega_id="+itemExterno.bodega_id+"");
-
-            
-    //         axios.get("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id="+itemExternoModelo+
-    //         "&bodega_id="+itemExternoBodega+"").then(
-    //         (response) => {
-                
-
-    //             console.log(response.data.dispositivo);
-                
-    //         });
-    // };
-    
-    
 
     // const [selectedOptionId, setSelectedOptionId] = useState(null);
 
@@ -137,51 +136,74 @@ const Home = () => {
         
     }, [idModelo, idBodega]);
 
+    useEffect(() => {
+        
+
+        console.log('se selecciono bodega', idBodega);
+            cargarGrillaBodega(idBodega)
+        
+        
+    }, [idBodega]);
+
 
     return (
-        
-            <Card style={{ marginTop: '20px' }}>
-                
+        <Card style={{ margin: '20px', padding: '20px' }}>
+  <Typography variant="h4" color="primary" align="center">
+    Selecciona tus opciones
+  </Typography>
+  <Grid container spacing={3} justify="center" alignItems="center">
+    <Grid item xs={12}>
+      <Card style={{ padding: '20px' }}>
+        <Typography variant="h5" color="primary" align="left">
+          Bodegas
+        </Typography>
+        <AutocompleteComponent opciones={bodegas} onOptionSelected={handleOptionSelectedBodega}/>
+      </Card>
+    </Grid>
+    <Grid item xs={12}>
+      <Card style={{ padding: '20px' }}>
+        <Typography variant="h5" color="primary" align="left">
+          Marcas
+        </Typography>
+        <AutocompleteComponent opciones={marcas} onOptionSelected={handleOptionSelectedMarcas}/>
+      </Card>
+    </Grid>
+    {modelos?.length > 0 && (
+      <Grid item xs={12}>
+        <Card style={{ padding: '20px' }}>
+          <Typography variant="h5" color="primary" align="left">
+            Modelos
+          </Typography>
+          <AutocompleteComponent opciones={modelos} onOptionSelected={handleOptionSelectedModelos}/>
+        </Card>
+      </Grid>
+    )}
+    {dispositivos?.length > 0 && (
+      <Grid item xs={12}>
+        <Card style={{ padding: '20px' }}>
+          <Typography variant="h5" color="primary" align="left">
+            Dispositivos
+          </Typography>
+          <AutocompleteComponent opciones={dispositivos} onOptionSelected={handleOptionSelectedDispositivos}/>
+        </Card>
+      </Grid>
+    )}
 
-                <Typography variant="h5" color="primary" align="left">
-                    Bodegas
-                </Typography>
-
-                <AutocompleteComponent opciones = {bodegas} onOptionSelected={handleOptionSelectedBodega}/> 
-                
-
-                
-
-                    <Typography variant="h5" color="primary" align="left">
-                    Marcas
-                    </Typography>
-                    
-                    <AutocompleteComponent opciones = {marcas} onOptionSelected={handleOptionSelectedMarcas}/> 
-                
-
-                {modelos?.length > 0 && (
-                    // console.log('hay modelos', modelos)
-                    <Grid spacing={3}>
-                        <Typography variant="h5" color="primary" align="left">
-                        Modelos
-                        </Typography>
-                        <AutocompleteComponent opciones = {modelos} onOptionSelected={handleOptionSelectedModelos}/> 
-                    </Grid>
-                    
-                )}
-                {dispositivos?.length > 0 && (
-                    // console.log('hay modelos', modelos)
-                    <Grid spacing={3}>
-                        <Typography variant="h5" color="primary" align="left">
-                        Dispositivos
-                        </Typography>
-                        <AutocompleteComponent opciones = {dispositivos} onOptionSelected={handleOptionSelectedDispositivos}/> 
-                    </Grid>
-                    
-                )}
+    {grilla?.length > 0 && (
+        <Grid item xs={12}>
+            <Card style={{ padding: '20px' }}>
+            <Typography variant="h5" color="primary" align="left">
+                Grilla
+            </Typography>
+                <TablaProductos productos={grilla}></TablaProductos>
             </Card>
-        
+        </Grid>
     
+    )}
+
+  </Grid>
+</Card>
+      
     );
 }
 

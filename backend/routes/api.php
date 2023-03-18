@@ -36,6 +36,7 @@ Route::prefix('/modelo')->group(function () use ($router) {
 Route::prefix('/bodega')->group(function () use ($router) {
     $router->get('/verBodega', [BodegaController::class, 'verBodega']);
     $router->get('/listarBodegas', [BodegaController::class, 'listarBodegas']);
+    $router->get('/listarDatosBodega', [BodegaController::class, 'listarDatosBodega']);
 
 });
 
