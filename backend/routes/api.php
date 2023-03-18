@@ -4,7 +4,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\ModeloController;
-use App\Http\Controllers\Dispositivo_bodegaController;
 use App\Http\Controllers\BodegaController;
 use App\Http\Controllers\DispositivoController;
 

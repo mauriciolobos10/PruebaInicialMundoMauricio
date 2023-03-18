@@ -1,7 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 
 const TablaProductos = ({productos}) => {
-    console.log('prod', productos)
     return (
         
       <TableContainer component={Paper}>
@@ -23,16 +22,7 @@ const TablaProductos = ({productos}) => {
                 <TableCell>{producto.marca_nombre}</TableCell>
                 <TableCell>{producto.modelo_nombre}</TableCell>
                 <TableCell>{producto.bodega_nombre}</TableCell>
-                {/* <TableCell>
-                  <Grid container spacing={2}>
-                    <Grid item>
-                      <Edit />
-                    </Grid>
-                    <Grid item>
-                      <Delete />
-                    </Grid>
-                  </Grid>
-                </TableCell> */}
+                
               </TableRow>
             ))}
           </TableBody>

@@ -3,7 +3,7 @@
 3. Ejecutar en consola composer install 
 4. Configurar .env e indicar el nombre de una base de datos creada en mysql (crearla en caso de no haber)
 5. En consola ejecutar: "php artisan migrate", para migrar la base de datos.
-6. Ejecutar: "php artisan migrate db:seed", para agregar registros de ejemplo a base de datos para pruebas.
+6. Ejecutar: "php artisan db:seed", para agregar registros de ejemplo a base de datos para pruebas.
 7. Ejecutar: "php artisan serve", para arrancar servidor backend.
 8. Abrir otra consola y navegar a "frontend".
 9. Ejecutar: "npm install".
