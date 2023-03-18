@@ -13,68 +13,14 @@ const Home = () => {
     
     
 
-
-    // useEffect(() => {
-    //     // // cargarDispositivos();
-    //     // // cargarDispositivos({modelo_id :1, bodega_id: 1});
-    //     //  cargarMarcas();
-    //     // // aumentar();
-        
-    // }, []);
-
-    // const obtenerMarca = (itemExterno) => {
-    //     axios.get("http://127.0.0.1:8000/api/marca/verMarca", {
-    //         id: itemExterno.id  
-    //         });
-
-
-    // };
-
-    // const [marcas, setMarcas] = useState([{id :'', nombre: ''}]); 
     const [marcas, setMarcas] = useState([]); 
-    const [contador, setContador] = useState(2);
-
-    const cargarMarcas = async () => {
-        
-        const data = await axios.get("http://127.0.0.1:8000/api/marca/listarMarcas");
-        
-
-        let datos = data?.data?.marcas.map((item) => {
-            return { label: item.marca_nombre, value: item.id.toString() };
-        });
-    
-        setMarcas(datos);
-
-
-        // axios.get("http://127.0.0.1:8000/api/marca/listarMarcas").then(
-        //     (response) => {
-        //         setMarcas(response?.data?.marcas);
-
-                
-
-
-
-        //         // response.data.marcas.forEach(element => {
-        //         //     const vara = {id :element.id, nombre: element.marca_nombre}
-        //         //     // console.log(vara);
-        //         //     setmarcas((marcas) => [vara,...marcas]);
-        //         //     // setContador(5);
-        //         //     // aumentar();
-        //         //     console.log(contador);
-        //         // });
-
-                
-        //     });
-        
-        // setTotal(data.data.total);
-      };
+    const [modelos, setModelos] = useState([]); 
+    const [bodegas, setBodegas] = useState([]); 
+    const [dispositivos, setDispositivos] = useState([]); 
 
     useEffect(() => {
         cargarMarcas();
-        // console.log('marcas', marcas);
-        // console.log(contador);
-        // setContador(5);
-        // console.log('cambiado',contador);
+        cargarBodegas();
         
     }, []);
     useEffect(() => {
@@ -82,81 +28,158 @@ const Home = () => {
         // cargarModelos(marcas.id)
         
     }, [marcas]);
+    
 
-    const [count, setCount] = useState(0);
-
-    // const cargarMarcas = () => {
+    const cargarMarcas = async () => {
         
-    //     axios.get("http://127.0.0.1:8000/api/marca/listarMarcas").then(
+        const data = await axios.get("http://127.0.0.1:8000/api/marca/listarMarcas");
+        
+
+        let datos = data?.data?.marcas.map((item) => {
+            return { label: item.id , value: item.marca_nombre.toString()};
+        });
+    
+        setMarcas(datos);
+
+
+      };
+      const cargarBodegas = async () => {
+        const data = await axios.get("http://127.0.0.1:8000/api/bodega/listarBodegas");
+        console.log('bodegas', data)
+
+        let datos = data?.data?.bodegas.map((item) => {
+            return { label: item.id , value: item.bodega_nombre.toString()};
+        });
+    
+        setBodegas(datos);
+
+
+      };
+    const cargarModelos = async (itemExterno) => {
+        setModelos(null)
+        const data = await axios.get("http://127.0.0.1:8000/api/modelo/listarModelos?marca_id="+itemExterno,{
+            marca_id: itemExterno
+        });
+        
+        let datos = data?.data?.modelos.map((item) => {
+            return { value: item.modelo_nombre.toString(), label: item.id };
+        });
+    
+        setModelos(datos);
+
+      };
+
+      const cargarDispositivos = async (itemExternoBodega,itemExternoModelo) => {
+        setDispositivos(null)
+        const data = await axios.get("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id="+itemExternoModelo+
+        "&bodega_id="+itemExternoBodega+"");
+        console.log('dispo',data.data.dispositivo)
+        
+        let datos = data?.data?.dispositivo.map((item) => {
+            return { value: item.dispositivo_nombre.toString(), label: item.id };
+        });
+    
+        setDispositivos(datos);
+
+      };
+      
+
+
+    // const cargarDispositivos = (itemExternoBodega,itemExternoModelo) => {
+    //     // axios.get("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id=1&bodega_id=1").then(
+    //         // console.log("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id="+itemExterno.modelo_id+
+    //         // "&bodega_id="+itemExterno.bodega_id+"");
+
+            
+    //         axios.get("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id="+itemExternoModelo+
+    //         "&bodega_id="+itemExternoBodega+"").then(
     //         (response) => {
                 
-    //             console.log(response.data.marcas);
-    //             setContador(4);
-    //             console.log(contador);
-    //             // setContador(65);
-    //             response.data.marcas.forEach(element => {
-    //                 // console.log(element);
-    //                 const vara = {id :element.id, nombre: element.marca_nombre}
-    //                 // console.log(vara);
-    //                 setmarcas((marcas) => [vara,...marcas]);
-    //                 // setContador(5);
-    //                 // aumentar();
-    //                 console.log(contador);
-    //             });
 
-    //             console.log(marcas);
+    //             console.log(response.data.dispositivo);
                 
     //         });
     // };
-    const aumentar = () => {
-        setContador(3);
-
-        console.log(contador);
-    };
-    const [listadoMarcas, setListadoMarcas] = useState(); ;
-
-    const cargarDispositivos = (itemExterno) => {
-        // axios.get("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id=1&bodega_id=1").then(
-            // console.log("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id="+itemExterno.modelo_id+
-            // "&bodega_id="+itemExterno.bodega_id+"");
-            axios.get("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id="+itemExterno.modelo_id+
-            "&bodega_id="+itemExterno.bodega_id+"").then(
-            (response) => {
-                
-
-                console.log(response.data.dispositivo);
-                
-            });
-    };
     
     
-    const [listado, setListado] = useState([]);
-    const top100Films = [
-        { label: 'The Shawshank Redemption', year: 1994 },
-        { label: 'The Godfather', year: 1972 },
-        { label: 'The Godfather: Part II', year: 1974 },
+
+    // const [selectedOptionId, setSelectedOptionId] = useState(null);
+
+    const handleOptionSelectedMarcas = (id) => {
+        // setSelectedOptionId(id);
+        cargarModelos(id)
+        console.log('alo',id)
+    };
+    const handleOptionSelectedModelos = (id) => {
+        // setSelectedOptionId(id);
+        // cargarModelos(id)
+        console.log('seleccione este modelo',id)
+        setIdModelo(id)
+    };
+    const handleOptionSelectedBodega= (id) => {
+        console.log('seleccione este bodega',id)
+        setIdBodega(id)
+    };
+    const handleOptionSelectedDispositivos= (id) => {
+        console.log('seleccione este dispositivo',id)
+    };
+    
+    const [idBodega, setIdBodega] = useState(null);
+    const [idModelo, setIdModelo] = useState(null);
+
+    useEffect(() => {
+        if (idModelo !== null && idBodega !== null) {
+
+            console.log('se selecciono modelo y bodega', idModelo, idBodega);
+            cargarDispositivos(idBodega, idModelo)
+          }
+        // cargarModelos(marcas.id)
         
-      ];
+    }, [idModelo, idBodega]);
 
-      const [value, setValue] = React.useState(top100Films[0]);
-
-    const [flag, setFlag] = useState(true);
-    
 
     return (
         
-        <CardContent>
-            <Card >
-                <AutocompleteComponent opciones = {marcas}/> 
+            <Card style={{ marginTop: '20px' }}>
+                
+
+                <Typography variant="h5" color="primary" align="left">
+                    Bodegas
+                </Typography>
+
+                <AutocompleteComponent opciones = {bodegas} onOptionSelected={handleOptionSelectedBodega}/> 
+                
+
+                
+
+                    <Typography variant="h5" color="primary" align="left">
+                    Marcas
+                    </Typography>
+                    
+                    <AutocompleteComponent opciones = {marcas} onOptionSelected={handleOptionSelectedMarcas}/> 
+                
 
                 {modelos?.length > 0 && (
-                    <Autocomplete
-                    options={modelos}
+                    // console.log('hay modelos', modelos)
+                    <Grid spacing={3}>
+                        <Typography variant="h5" color="primary" align="left">
+                        Modelos
+                        </Typography>
+                        <AutocompleteComponent opciones = {modelos} onOptionSelected={handleOptionSelectedModelos}/> 
+                    </Grid>
                     
-                    />
+                )}
+                {dispositivos?.length > 0 && (
+                    // console.log('hay modelos', modelos)
+                    <Grid spacing={3}>
+                        <Typography variant="h5" color="primary" align="left">
+                        Dispositivos
+                        </Typography>
+                        <AutocompleteComponent opciones = {dispositivos} onOptionSelected={handleOptionSelectedDispositivos}/> 
+                    </Grid>
+                    
                 )}
             </Card>
-        </CardContent>
         
     
     );
