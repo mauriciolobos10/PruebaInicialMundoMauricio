@@ -10,17 +10,9 @@ const AutocompleteComponent = ({opciones, onOptionSelected}) => {
   const handleChange = (event, newValue) => {
     setValue(newValue);
 
-    const selectedOptionId = newValue ? newValue.id : null;
     
     console.log('hola', newValue.label)
     onOptionSelected(newValue.label);
-    // stackModelos = value.value;
-    // stackModelos = opciones?.id || null
-
-    // console.log('value22',value.label)
-  //   {value?.length > 0 && (
-  // )};
-  
   };
  
 
@@ -28,11 +20,10 @@ const AutocompleteComponent = ({opciones, onOptionSelected}) => {
     <Autocomplete
       options={opciones}
       getOptionLabel={(opciones) => opciones.value}
-      // getOptionLabel={(option) => option.label}
       value={value}
       onChange={handleChange}
       renderInput={(params) => (
-        <TextField {...params} label="Select an option" variant="outlined" />
+        <TextField {...params} label="Seleccione una opción" variant="outlined" />
       )}
     />
   );

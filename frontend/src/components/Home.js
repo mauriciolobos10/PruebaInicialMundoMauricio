@@ -1,14 +1,9 @@
-import { Card, CardContent, createTheme, Grid, TextField, Typography, CircularProgress, Autocomplete} from "@mui/material"
-import { Stack, ThemeProvider } from "@mui/system";
+import { Card, Grid,  Typography, } from "@mui/material"
 import axios from "axios";
 
-import React, { Component, useEffect, useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import AutocompleteComponent from "./AutocompleteComponent";
 import TablaProductos from "./TablaProductos";
-// import { useBuscarPerro } from "../Queries/QueriPerro";
-// import Perro from "./Perro";
-
-// import { LinearProgress } from "@mui/material";
 
 const Home = () => {
     
@@ -26,11 +21,7 @@ const Home = () => {
         cargarBodegas();
         
     }, []);
-    useEffect(() => {
-        console.log('marcas2', marcas);
-        // cargarModelos(marcas.id)
-        
-    }, [marcas]);
+    
     
 
     const cargarMarcas = async () => {
@@ -48,7 +39,6 @@ const Home = () => {
       };
       const cargarBodegas = async () => {
         const data = await axios.get("http://127.0.0.1:8000/api/bodega/listarBodegas");
-        console.log('bodegas', data)
 
         let datos = data?.data?.bodegas.map((item) => {
             return { label: item.id , value: item.bodega_nombre.toString()};
@@ -76,7 +66,6 @@ const Home = () => {
         setDispositivos(null)
         const data = await axios.get("http://127.0.0.1:8000/api/dispositivo/listarDispositivos?modelo_id="+itemExternoModelo+
         "&bodega_id="+itemExternoBodega+"");
-        console.log('dispo',data.data.dispositivo)
         
         let datos = data?.data?.dispositivo.map((item) => {
             return { value: item.dispositivo_nombre.toString(), label: item.id };
@@ -89,7 +78,6 @@ const Home = () => {
       const cargarGrillaBodega = async (itemExternoBodega) => {
         setGrilla(null)
         const data = await axios.get("http://127.0.0.1:8000/api/bodega/listarDatosBodega?id="+itemExternoBodega);
-        console.log('dispo',data.data.bodegas)
         
         let datos = data?.data?.bodegas.map((item) => {
             return { label: item.id, dispositivo_nombre: item.dispositivo_nombre.toString(), modelo_nombre: item.modelo_nombre.toString()
@@ -107,20 +95,17 @@ const Home = () => {
     const handleOptionSelectedMarcas = (id) => {
         // setSelectedOptionId(id);
         cargarModelos(id)
-        console.log('alo',id)
     };
     const handleOptionSelectedModelos = (id) => {
         // setSelectedOptionId(id);
         // cargarModelos(id)
-        console.log('seleccione este modelo',id)
         setIdModelo(id)
     };
     const handleOptionSelectedBodega= (id) => {
-        console.log('seleccione este bodega',id)
         setIdBodega(id)
     };
     const handleOptionSelectedDispositivos= (id) => {
-        console.log('seleccione este dispositivo',id)
+        
     };
     
     const [idBodega, setIdBodega] = useState(null);
@@ -129,7 +114,6 @@ const Home = () => {
     useEffect(() => {
         if (idModelo !== null && idBodega !== null) {
 
-            console.log('se selecciono modelo y bodega', idModelo, idBodega);
             cargarDispositivos(idBodega, idModelo)
           }
         // cargarModelos(marcas.id)
@@ -139,7 +123,6 @@ const Home = () => {
     useEffect(() => {
         
 
-        console.log('se selecciono bodega', idBodega);
             cargarGrillaBodega(idBodega)
         
         
